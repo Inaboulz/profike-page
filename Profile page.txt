@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .profile-container {
+            width: 90%;
+            max-width: 400px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #4CAF50;
+        }
+        .upload-btn {
+            display: block;
+            margin: 10px auto;
+        }
+        .info {
+            margin-top: 10px;
+        }
+        .competitions {
+            text-align: left;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-container">
+        <h2>Student Profile</h2>
+        <img id="profileImage" class="profile-pic" src="default-profile.png" alt="Profile Picture">
+        <input type="file" id="fileInput" class="upload-btn" accept="image/*">
+        
+        <div class="info">
+            <p><strong>Name:</strong> <span id="studentName">John Doe</span></p>
+            <p><strong>Grade & Section:</strong> <span id="studentGrade">10 - A</span></p>
+        </div>
+
+        <div class="competitions">
+            <h3>Past Competitions</h3>
+            <ul id="pastCompetitions">
+                <li>Math Olympiad - <b>1st Place</b></li>
+                <li>Spelling Bee - <b>Participant</b></li>
+            </ul>
+
+            <h3>Upcoming Competitions</h3>
+            <ul id="upcomingCompetitions">
+                <li>Science Quiz Bee - March 15, 2025</li>
+                <li>Essay Writing - March 22, 2025</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profileImage').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // This can later be replaced with dynamic data from your database
+        const studentProfile = {
+            name: "John Doe",
+            grade: "10 - A",
+            pastCompetitions: [
+                { name: "Math Olympiad", placement: "1st Place" },
+                { name: "Spelling Bee", placement: "Participant" }
+            ],
+            upcomingCompetitions: [
+                { name: "Science Quiz Bee", date: "March 15, 2025" },
+                { name: "Essay Writing", date: "March 22, 2025" }
+            ]
+        };
+
+        // Populate profile details
+        document.getElementById("studentName").textContent = studentProfile.name;
+        document.getElementById("studentGrade").textContent = studentProfile.grade;
+
+        // Populate past competitions
+        const pastCompList = document.getElementById("pastCompetitions");
+        pastCompList.innerHTML = "";
+        studentProfile.pastCompetitions.forEach(comp => {
+            let li = document.createElement("li");
+            li.innerHTML = `${comp.name} - <b>${comp.placement}</b>`;
+            pastCompList.appendChild(li);
+        });
+
+        // Populate upcoming competitions
+        const upcomingCompList = document.getElementById("upcomingCompetitions");
+        upcomingCompList.innerHTML = "";
+        studentProfile.upcomingCompetitions.forEach(comp => {
+            let li = document.createElement("li");
+            li.innerHTML = `${comp.name} - ${comp.date}`;
+            upcomingCompList.appendChild(li);
+        });
+    </script>
+
+</body>
+</html>
